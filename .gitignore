@@ -1,0 +1,25 @@
+# Bytecode Python
+__pycache__/
+*.py[cod]
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+.env/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+
+# Distribuições / builds
+build/
+dist/
+*.egg-info/
+
+# IDEs comuns
+.vscode/
+.idea/
