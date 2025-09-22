@@ -1,93 +1,122 @@
-class JogoDaVela:
-    tabuleiro = {'7': ' ', '8': ' ', '9': ' ', '4': ' ', '5': ' ', '6': ' ', '1': ' ', '2': ' ', '3': ' '}
-    turno = None
+import math
 
-    def __init__(self, jogador_inicial="X"):
-        self.turno = jogador_inicial
+# Representação do tabuleiro
+board = [" "] * 9  # 9 espaços vazios
 
-    def exibir_tabuleiro(self):
-        print("┌───┬───┬───┐")
-        print(f"│ {self.tabuleiro['7']} │ {self.tabuleiro['8']} │ {self.tabuleiro['9']} │")
-        print("├───┼───┼───┤")
-        print(f"│ {self.tabuleiro['4']} │ {self.tabuleiro['5']} │ {self.tabuleiro['6']} │")
-        print("├───┼───┼───┤")
-        print(f"│ {self.tabuleiro['1']} │ {self.tabuleiro['2']} │ {self.tabuleiro['3']} │")
-        print("└───┴───┴───┘")
+# Flag para ativar/desativar poda alfa-beta
+USE_ALPHA_BETA = True
 
-    def verificar_jogada(self, jogada):
-        if jogada in self.tabuleiro.keys():
-            if self.tabuleiro[jogada] == " ":
-                return True
-        return False
+# Função para imprimir o tabuleiro
+def print_board():
+    print("\n")
+    for i in range(3):
+        print(" | ".join(board[i*3:(i+1)*3]))
+        if i < 2:
+            print("---------")
+    print("\n")
 
-    def verificar_tabuleiro(self):
-        # Verificações das 3 verticais
-        if self.tabuleiro['7'] == self.tabuleiro['4'] == self.tabuleiro['1'] != ' ':
-            return self.tabuleiro['7']
-        elif self.tabuleiro['8'] == self.tabuleiro['5'] == self.tabuleiro['2'] != ' ':
-            return self.tabuleiro['8']
-        elif self.tabuleiro['9'] == self.tabuleiro['6'] == self.tabuleiro['3'] != ' ':
-            return self.tabuleiro['9']
+# Verifica se há um vencedor
+def check_winner(b, player):
+    win_states = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  # linhas
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],  # colunas
+        [0, 4, 8], [2, 4, 6]              # diagonais
+    ]
+    for state in win_states:
+        if all(b[i] == player for i in state):
+            return True
+    return False
 
+# Verifica se ainda há jogadas possíveis
+def is_full(b):
+    return all(space != " " for space in b)
 
-        # Verificações das 3 horizontais
-        elif self.tabuleiro['7'] == self.tabuleiro['8'] == self.tabuleiro['9'] != ' ':
-            return self.tabuleiro['7']
-        elif self.tabuleiro['4'] == self.tabuleiro['5'] == self.tabuleiro['6'] != ' ':
-            return self.tabuleiro['8']
-        elif self.tabuleiro['1'] == self.tabuleiro['2'] == self.tabuleiro['3'] != ' ':
-            return self.tabuleiro['1']
+# Função minimax com ou sem poda alfa-beta
+def minimax(b, depth, alpha, beta, is_maximizing):
+    if check_winner(b, "O"):
+        return 1
+    if check_winner(b, "X"):
+        return -1
+    if is_full(b):
+        return 0
 
-        # Verificações das 2 diagonais
-        elif self.tabuleiro['7'] == self.tabuleiro['5'] == self.tabuleiro['3'] != ' ':
-            return self.tabuleiro['7']
-        elif self.tabuleiro['1'] == self.tabuleiro['5'] == self.tabuleiro['9'] != ' ':
-            return self.tabuleiro['1']
+    if is_maximizing:
+        max_eval = -math.inf
+        for i in range(9):
+            if b[i] == " ":
+                b[i] = "O"
+                eval = minimax(b, depth + 1, alpha, beta, False)
+                b[i] = " "
+                max_eval = max(max_eval, eval)
+                if USE_ALPHA_BETA:
+                    alpha = max(alpha, eval)
+                    if beta <= alpha:
+                        break  # poda
+        return max_eval
+    else:
+        min_eval = math.inf
+        for i in range(9):
+            if b[i] == " ":
+                b[i] = "X"
+                eval = minimax(b, depth + 1, alpha, beta, True)
+                b[i] = " "
+                min_eval = min(min_eval, eval)
+                if USE_ALPHA_BETA:
+                    beta = min(beta, eval)
+                    if beta <= alpha:
+                        break  # poda
+        return min_eval
 
-        # Verificando empate
-        if [*self.tabuleiro.values()].count(' ') == 0:
-            return "empate"
-        else:
-            return [*self.tabuleiro.values()].count(' ')
+# Melhor jogada do computador
+def best_move():
+    best_score = -math.inf
+    move = None
+    for i in range(9):
+        if board[i] == " ":
+            board[i] = "O"
+            score = minimax(board, 0, -math.inf, math.inf, False)
+            board[i] = " "
+            if score > best_score:
+                best_score = score
+                move = i
+    return move
 
-    def jogar(self):
+# Loop principal do jogo
+print("Jogo da Velha - Você é X e joga primeiro!")
+print("Poda alfa-beta está:", "ATIVADA" if USE_ALPHA_BETA else "DESATIVADA")
+print_board()
 
-        while True:
-            self.exibir_tabuleiro()
-
-            print(f"Turno do {self.turno}, qual sua jogada?")
-
-            # Enquanto o jogador não fizer uma jogada válida
-            while True:
-                jogada = input("Jogada: ")
-
-                if self.verificar_jogada(jogada):  # Se a jogada for válida...
-                    break  # Encerra o loop
-                else:
-                    print(f"jogado do {self.turno} inválida, jogue novamente.")
-
-            self.tabuleiro[jogada] = self.turno
-
-            estado = self.verificar_tabuleiro()
-
-            if estado == "X":
-                print("X é o vencedor!!!")
+while True:
+    # Jogador humano
+    while True:
+        try:
+            move = int(input("Escolha sua jogada (1-9): ")) - 1
+            if move >= 0 and move < 9 and board[move] == " ":
+                board[move] = "X"
                 break
+            else:
+                print("Jogada inválida. Tente novamente.")
+        except ValueError:
+            print("Digite um número válido.")
 
-            elif estado == "O":
-                print("O é o vencedor!!!")
-                break
+    print_board()
 
-            if estado == "empate":
-                print("EMPATE!!!")
-                break
+    if check_winner(board, "X"):
+        print("Você venceu!")
+        break
+    if is_full(board):
+        print("Empate!")
+        break
 
-            # Troca o jogador do próximo turno
-            self.turno = "X" if self.turno == "O" else "O"
+    # Jogada do computador
+    move = best_move()
+    board[move] = "O"
+    print("Computador jogou!")
+    print_board()
 
-        self.exibir_tabuleiro()
-
-
-jogo = JogoDaVela()
-
-jogo.jogar()
+    if check_winner(board, "O"):
+        print("O computador venceu!")
+        break
+    if is_full(board):
+        print("Empate!")
+        break
