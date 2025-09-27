@@ -2,16 +2,11 @@ import math
 import time
 import matplotlib.pyplot as plt
 
-# --- Configuração Inicial ---
-
 tabuleiro = [" "] * 9
 contador_de_nos = 0
 USAR_PODA_ALFA_BETA = True
 
-# --- Arte ASCII ---
-
 def imprimir_titulo_ascii():
-    """Imprime o título 'NIAD' em arte ASCII."""
     titulo = r"""
 ==============================================================================================
 *                                                                                         *
@@ -60,8 +55,6 @@ def verificar_vencedor(t, jogador):
 def esta_cheio(t):
     """Verifica se o tabuleiro está completamente preenchido."""
     return " " not in t
-
-# --- Inteligência Artificial (Agente de Jogo) ---
 
 def minimax(t, profundidade, alpha, beta, eh_maximizador):
     """Algoritmo MinMax com Poda Alfa-Beta opcional."""
@@ -113,8 +106,6 @@ def encontrar_melhor_jogada(t):
                 melhor_jogada = i
     return melhor_jogada
 
-# --- Funções de Análise e Visualização ---
-
 def gerar_grafico_barras(titulo, label_y, dados, legendas):
     """Função genérica para criar gráficos de barras."""
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -131,11 +122,9 @@ def gerar_grafico_barras(titulo, label_y, dados, legendas):
 def gerar_grafico_linhas(titulo, label_y, label_x, dados_minmax, dados_alfabeta):
     """Cria um gráfico de linhas para comparar dados ao longo do tempo/jogadas."""
     fig, ax = plt.subplots(figsize=(10, 6))
-    # Garante que ambas as listas tenham o mesmo comprimento para o plot
     max_len = max(len(dados_minmax), len(dados_alfabeta))
     jogadas = range(1, max_len + 1)
     
-    # Preenche listas menores com o último valor para não dar erro no plot
     dados_minmax.extend([dados_minmax[-1]] * (max_len - len(dados_minmax)))
     dados_alfabeta.extend([dados_alfabeta[-1]] * (max_len - len(dados_alfabeta)))
     
@@ -181,8 +170,6 @@ def executar_analise():
     tabuleiro_temporario = [" "] * 9
     legendas = ['MinMax Puro', 'MinMax com Poda Alfa-Beta']
 
-    # --- Coleta de Dados para o 1º movimento ---
-    # Nós (MinMax Puro)
     contador_de_nos = 0
     USAR_PODA_ALFA_BETA = False
     tempo_inicio = time.perf_counter()
@@ -228,7 +215,6 @@ def executar_analise():
 # --- Loop Principal e Menu do Jogo ---
 
 def jogar_partida():
-    """Inicia o loop para um jogo interativo."""
     global tabuleiro
     tabuleiro = [" "] * 9
     
@@ -270,7 +256,6 @@ if __name__ == "__main__":
     while True:
         imprimir_titulo_ascii()
         
-        # **[MUDANÇA AQUI]** Menu atualizado com as novas opções
         print("--- MENU PRINCIPAL ---")
         print("Escolha uma opção:")
         print("1. Jogar contra a IA Otimizada (Com Poda Alfa-Beta)")
@@ -286,10 +271,8 @@ if __name__ == "__main__":
         elif escolha == '2':
             USAR_PODA_ALFA_BETA = False
             jogar_partida()
-        # **[MUDANÇA AQUI]** Nova opção para chamar a análise
         elif escolha == '3':
             executar_analise()
-        # **[MUDANÇA AQUI]** Opção de sair agora é a 4
         elif escolha == '4':
             print("Obrigado por jogar!")
             break
