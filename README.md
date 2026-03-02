@@ -41,7 +41,7 @@ Para executar o projeto em sua máquina local, siga os passos abaixo.
 
 1.  Clone o repositório:
     ```bash
-    git clone https://github.com/seu-usuario/Projeto-NIAD-2025.git
+    git clone https://github.com/EstevaoAugusto/Projeto-NIAD-2025
     cd Projeto-NIAD-2025
     ```
 2.  Instale as dependências (apenas `matplotlib`):
