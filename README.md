@@ -2,25 +2,25 @@
 
 ### Uma Análise Comparativa do Algoritmo MinMax com e sem Poda Alfa-Beta
 
-## 🎯 Sobre o Projeto
+##  Sobre o Projeto
 
 Este projeto foi desenvolvido como parte do processo seletivo de trainees para o **NIAD (Núcleo de Estudos em Inteligência Artificial e Data Science)**. O desafio consistiu em desenvolver uma inteligência artificial invencível para o Jogo da Velha, utilizando o algoritmo MinMax, e, crucialmente, demonstrar quantitativamente o ganho de eficiência computacional obtido com a otimização de Poda Alfa-Beta.
 
 O resultado é um programa interativo que não apenas permite jogar contra duas versões da IA, mas também executa uma análise de desempenho completa, gerando métricas e gráficos que comprovam a eficácia da otimização.
 
-## 📜 Índice
+##  Índice
 
-  - [🎯 Sobre o Projeto](#Sobre-o-Projeto)
-  - [🛠️ Conceitos Implementados](#Conceitos-Implementados)
-  - [🚀 Como Executar](#Como-Executar)
-  - [📊 Análise de Desempenho e Estatísticas](#Analise-de-Desempenho-e-Estatisticas)
+  - [ Sobre o Projeto](#Sobre-o-Projeto)
+  - [ Conceitos Implementados](#Conceitos-Implementados)
+  - [ Como Executar](#Como-Executar)
+  - [ Análise de Desempenho e Estatísticas](#Analise-de-Desempenho-e-Estatisticas)
       - [Métrica Principal: Nós da Árvore Avaliados]
       - [Análise do Gráfico 1: Comparativo de Nós (Primeira Jogada)]
       - [Análise do Gráfico 2: Comparativo de Tempo de Execução]
       - [Análise do Gráfico 3: Desempenho ao Longo de uma Partida]
-  - [🤝 Equipe](#equipe)
+  - [ Equipe](#equipe)
 
-## 🛠️ Conceitos Implementados
+##  Conceitos Implementados
 
   - **Algoritmo MinMax:** Implementação do algoritmo clássico para busca em jogos de dois jogadores com soma zero.
   - **Busca Competitiva (Adversarial Search):** Modelagem do Jogo da Velha como uma árvore de decisões onde dois oponentes (Max e Min) tentam otimizar seus resultados.
@@ -28,7 +28,7 @@ O resultado é um programa interativo que não apenas permite jogar contra duas 
   - **Análise de Complexidade:** Instrumentação do código com um contador de nós para medir objetivamente a complexidade da busca em cada cenário.
   - **Visualização de Dados:** Uso da biblioteca `Matplotlib` para gerar gráficos comparativos e apresentar os resultados da análise de forma clara e profissional.
 
-## 🚀 Como Executar
+##  Como Executar
 
 Para executar o projeto em sua máquina local, siga os passos abaixo.
 
@@ -57,7 +57,7 @@ Para executar o projeto em sua máquina local, siga os passos abaixo.
       - Gerar a análise de desempenho completa (opção 3).
       - Sair do programa (opção 4).
 
-## 📊 Análise de Desempenho e Estatísticas
+##  Análise de Desempenho e Estatísticas
 
 O foco deste projeto é **provar quantitativamente** a eficiência da Poda Alfa-Beta. Ao selecionar a opção "Gerar Gráficos de Desempenho", o programa executa uma série de testes e apresenta os seguintes resultados:
 
@@ -112,7 +112,7 @@ Este gráfico de linhas é o mais revelador, pois mostra como a eficiência de c
 **Por que isso acontece?**
 Este gráfico prova que a Poda Alfa-Beta não é apenas uma otimização para o início do jogo, mas sim uma melhoria fundamental que se aplica a qualquer estado do tabuleiro. Em cada turno, ela consegue encontrar e eliminar galhos irrelevantes da árvore de busca, mantendo sua vantagem de eficiência do começo ao fim da partida.
 
-## 🤝 Equipe
+##  Equipe
 
   - Estevão Augusto da Fonseca Santos
   - Giovane Godoi
